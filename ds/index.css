@@ -1,0 +1,4 @@
+/* Единая точка входа: <link rel="stylesheet" href=".../design-system/index.css"> */
+@import url("./tokens.css");
+@import url("./base.css");
+@import url("./components.css");

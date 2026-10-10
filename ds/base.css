@@ -1,0 +1,31 @@
+/* База: сброс, шрифт, тонкие скроллбары, кольцо фокуса. Подключается после tokens.css. */
+
+*, *::before, *::after { box-sizing: border-box; border-color: var(--border); }
+
+html, body { margin: 0; height: 100%; }
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-size: var(--text-xs-plus);
+  line-height: 1.375;
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+button, input, select, textarea { font: inherit; color: inherit; }
+a { color: inherit; text-decoration: none; }
+[hidden] { display: none !important; }
+::selection { background: color-mix(in oklab, var(--accent) 40%, transparent); }
+
+:focus-visible { outline: 2px solid var(--ring-accent); outline-offset: 2px; }
+
+/* тонкие скроллбары, как в Toolcraft */
+* { scrollbar-width: thin; scrollbar-color: color-mix(in oklab, var(--foreground) 14%, transparent) transparent; }
+*::-webkit-scrollbar { width: 6px; height: 6px; }
+*::-webkit-scrollbar-track, *::-webkit-scrollbar-corner { background: transparent; }
+*::-webkit-scrollbar-thumb { border-radius: 999px; background-color: color-mix(in oklab, var(--foreground) 14%, transparent); background-clip: padding-box; }
+
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }

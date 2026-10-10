@@ -1,0 +1,83 @@
+/* Токены дизайн-системы — единый источник для личных инструментов.
+ *
+ * Значения и имена взяты из Toolcraft (src/styles.css), чтобы приложения на самом Toolcraft
+ * и лёгкие инструменты на чистом HTML выглядели одинаково. Менять цвет — только здесь.
+ * Шрифт Inter (OFL-1.1) лежит рядом, в fonts/, работает без интернета.
+ */
+
+@font-face {
+  font-family: "Inter Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("./fonts/inter-cyrillic-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: "Inter Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("./fonts/inter-latin-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  /* ---- цвета (как в Toolcraft) ---- */
+  --background: oklch(0 0 0);
+  --foreground: oklch(0.977 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --link: #70b0fa;
+  --primary: oklch(0.546 0.215 262.88);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.249 0.07 263.47);
+  --secondary-foreground: oklch(0.977 0 0);
+  --muted: #262626;
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: #0c8ce9;
+  --accent-foreground: oklch(0.985 0 0);
+  --inspect: #9149f5;
+  --attention: #ea733a;
+  --attention-foreground: oklch(0.145 0 0);
+  --destructive: hsl(0 84% 60%);
+  --destructive-foreground: var(--foreground);
+  --border: oklch(0.311 0.013 279.19);
+  --input: oklch(0.311 0.013 279.19);
+  --ring: oklch(0.556 0 0);
+
+  /* ---- шрифты и размеры текста ---- */
+  --font-sans: "Inter Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  --text-2xs: 0.6875rem;      /* 11 */
+  --text-xs: 0.75rem;         /* 12 */
+  --text-xs-plus: 0.8125rem;  /* 13 — основной размер интерфейса */
+  --text-sm: 0.875rem;        /* 14 */
+  --text-base: 1rem;          /* 16 */
+  --text-lg: 1.125rem;        /* 18 */
+  --text-xl: 1.375rem;        /* 22 */
+
+  /* ---- радиусы ---- */
+  --radius-xs: 0.125rem;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+
+  /* ---- производные (только для лёгких инструментов; в Toolcraft их считает Tailwind) ---- */
+  --control-h-sm: 1.5rem;     /* 24 */
+  --control-h: 1.75rem;       /* 28 */
+  --control-h-lg: 2rem;       /* 32 */
+  --surface: color-mix(in oklab, var(--popover) 75%, black);   /* панели: чуть темнее карточки */
+  --surface-raised: var(--card);
+  --surface-hover: color-mix(in oklab, var(--foreground) 8%, transparent);
+  --surface-active: color-mix(in oklab, var(--foreground) 14%, transparent);
+  --field: color-mix(in oklab, var(--foreground) 7%, transparent);
+  --line: color-mix(in oklab, var(--border) 55%, transparent);
+  --ring-accent: color-mix(in oklab, var(--accent) 75%, transparent);
+  --shadow-popup: 0 12px 32px rgb(0 0 0 / 0.5);
+
+  color-scheme: dark;
+}

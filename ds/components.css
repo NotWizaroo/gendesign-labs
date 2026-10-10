@@ -1,0 +1,103 @@
+/* Компоненты для лёгких инструментов на чистом HTML. Префикс ds- — чтобы не конфликтовать с проектом.
+ * Внешний вид повторяет Toolcraft: нейтральные поверхности, мелкий текст 13 px, радиусы 6–12 px.
+ */
+
+/* ---------- кнопки ---------- */
+.ds-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  height: var(--control-h); padding: 0 10px;
+  border: 1px solid transparent; border-radius: var(--radius-md);
+  background: var(--muted); color: var(--foreground);
+  font-size: var(--text-xs-plus); font-weight: 500; letter-spacing: -0.01em; white-space: nowrap;
+  cursor: pointer; transition: background-color .12s;
+}
+.ds-btn:hover { background: color-mix(in oklab, var(--muted), var(--foreground) 9%); }
+.ds-btn:active { background: color-mix(in oklab, var(--muted), var(--foreground) 15%); }
+.ds-btn[aria-pressed="true"] { background: var(--surface-active); }
+.ds-btn:disabled { opacity: .4; pointer-events: none; }
+.ds-btn-icon { width: var(--control-h); padding: 0; }
+.ds-btn-icon svg { display: block; }
+.ds-btn-sm { height: var(--control-h-sm); padding: 0 8px; font-size: var(--text-xs); }
+.ds-btn-ghost { background: transparent; }
+.ds-btn-ghost:hover { background: var(--surface-hover); }
+.ds-btn-ghost:active, .ds-btn-ghost[aria-pressed="true"] { background: var(--surface-active); }
+.ds-btn-primary { background: var(--primary); color: var(--primary-foreground); }
+.ds-btn-primary:hover { background: color-mix(in oklab, var(--primary), white 12%); }
+.ds-btn-primary:active { background: color-mix(in oklab, var(--primary), black 10%); }
+
+/* ---------- поля ---------- */
+.ds-input {
+  width: 100%; height: var(--control-h); padding: 0 10px;
+  border: 1px solid transparent; border-radius: var(--radius-md);
+  background: var(--field); color: var(--foreground); font-size: var(--text-xs-plus);
+}
+.ds-input::placeholder { color: var(--muted-foreground); opacity: .7; }
+.ds-input:hover { background: color-mix(in oklab, var(--foreground) 10%, transparent); }
+.ds-input:focus { outline: none; border-color: var(--ring-accent); background: var(--field); }
+
+/* ---------- вкладки (сегментный переключатель) ---------- */
+.ds-tabs { display: flex; gap: 2px; padding: 2px; border-radius: var(--radius-lg); background: var(--field); }
+.ds-tab {
+  flex: 1; height: var(--control-h-sm); border: 0; border-radius: var(--radius-md);
+  background: transparent; color: var(--muted-foreground); font-size: var(--text-xs-plus); font-weight: 500; cursor: pointer;
+}
+.ds-tab:hover { color: var(--foreground); }
+.ds-tab.on, .ds-tab[aria-selected="true"] { background: var(--surface-raised); color: var(--foreground); box-shadow: 0 1px 2px rgb(0 0 0 / .35); }
+
+/* ---------- бейдж ---------- */
+.ds-badge {
+  display: inline-flex; align-items: center; padding: 1px 6px; border-radius: 999px;
+  background: var(--surface-hover); color: var(--muted-foreground); font-size: var(--text-2xs); line-height: 1rem;
+}
+.ds-badge-warm { color: var(--attention); background: color-mix(in oklab, var(--attention) 14%, transparent); }
+
+/* ---------- карточка, меню, подпись секции ---------- */
+.ds-card { border: 1px solid var(--line); border-radius: var(--radius-xl); background: var(--surface-raised); overflow: hidden; }
+
+.ds-menu {
+  min-width: 240px; padding: 4px; border-radius: var(--radius-lg);
+  border: 1px solid var(--line); background: color-mix(in oklab, var(--popover) 98%, transparent); box-shadow: var(--shadow-popup);
+}
+.ds-menu button {
+  display: block; width: 100%; height: var(--control-h); padding: 0 10px; text-align: left;
+  border: 0; border-radius: var(--radius-md); background: none; font-size: var(--text-xs-plus); cursor: pointer;
+}
+.ds-menu button:hover, .ds-menu button:focus-visible { background: var(--surface-hover); outline: none; }
+
+.ds-eyebrow { font-size: var(--text-2xs); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted-foreground); }
+
+.ds-code {
+  margin: 0; padding: 12px; border-radius: var(--radius-lg); border: 1px solid var(--line);
+  background: var(--background); color: color-mix(in oklab, var(--foreground) 88%, transparent);
+  font: var(--text-xs)/1.6 var(--font-mono); overflow: auto; tab-size: 2;
+}
+.ds-code .kw { color: #ff8f6b; } .ds-code .fn { color: #c2a0ff; } .ds-code .num { color: var(--link); }
+.ds-code .str { color: #9bd1ff; } .ds-code .cm { color: var(--muted-foreground); }
+
+code.ds-inline { padding: 1px 6px; border-radius: var(--radius-sm); background: var(--field); font: var(--text-xs) var(--font-mono); }
+
+/* ---------- тема для Tweakpane (контейнер с классом ds-tweakpane) ---------- */
+.ds-tweakpane {
+  --tp-base-background-color: transparent;
+  --tp-base-shadow-color: transparent;
+  --tp-container-background-color: var(--field);
+  --tp-container-background-color-hover: color-mix(in oklab, var(--foreground) 10%, transparent);
+  --tp-container-background-color-focus: color-mix(in oklab, var(--foreground) 12%, transparent);
+  --tp-container-background-color-active: color-mix(in oklab, var(--foreground) 14%, transparent);
+  --tp-container-foreground-color: var(--foreground);
+  --tp-input-background-color: var(--field);
+  --tp-input-background-color-hover: color-mix(in oklab, var(--foreground) 11%, transparent);
+  --tp-input-background-color-focus: color-mix(in oklab, var(--foreground) 13%, transparent);
+  --tp-input-background-color-active: color-mix(in oklab, var(--foreground) 15%, transparent);
+  --tp-input-foreground-color: var(--foreground);
+  --tp-label-foreground-color: var(--muted-foreground);
+  --tp-groove-foreground-color: color-mix(in oklab, var(--foreground) 16%, transparent);
+  --tp-button-background-color: var(--muted);
+  --tp-button-background-color-hover: color-mix(in oklab, var(--muted), var(--foreground) 9%);
+  --tp-button-background-color-focus: color-mix(in oklab, var(--muted), var(--foreground) 12%);
+  --tp-button-background-color-active: color-mix(in oklab, var(--muted), var(--foreground) 15%);
+  --tp-button-foreground-color: var(--foreground);
+  --tp-font-family: var(--font-sans);
+}
+.ds-tweakpane .tp-lblv_l, .ds-tweakpane .tp-btnv_t { font-size: var(--text-xs-plus); letter-spacing: -0.01em; }
+.ds-tweakpane .tp-lblv_l { font-weight: 500; }
