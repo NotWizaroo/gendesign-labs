@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Генеративный дизайн — студия</title>
+  <link rel="stylesheet" href="../ds/index.css">
+  <link rel="stylesheet" href="studio.css">
+</head>
+<body>
+<div id="app">
+
+  <header class="bar">
+    <button class="ds-btn ds-btn-icon ds-btn-ghost" id="btn-side" title="Показать / скрыть каталог" aria-label="Каталог" aria-pressed="true"><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="12" height="10" rx="2"/><path d="M6 3v10"/></svg></button>
+    <button class="ds-btn" id="btn-back" title="Вернуться в каталог" hidden>← Каталог</button>
+    <a class="brand" href="#/gallery">Генеративный дизайн</a>
+    <nav class="crumbs" id="crumbs" aria-label="Где я"></nav>
+    <div class="actions" id="actions" hidden>
+      <button class="ds-btn ds-btn-icon ds-btn-ghost" id="btn-prev" title="Предыдущая работа (Alt+←)" aria-label="Предыдущая работа">←</button>
+      <button class="ds-btn ds-btn-icon ds-btn-ghost" id="btn-next" title="Следующая работа (Alt+→)" aria-label="Следующая работа">→</button>
+      <span class="sep"></span>
+      <button class="ds-btn ds-btn-icon ds-btn-ghost" id="btn-restart" title="Перезапустить скетч" aria-label="Перезапустить"><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 8a5 5 0 1 1-1.6-3.7"/><path d="M13 3v3h-3"/></svg></button>
+      <button class="ds-btn ds-btn-ghost" id="btn-png" title="Сохранить текущий кадр как PNG">PNG</button>
+      <button class="ds-btn ds-btn-icon ds-btn-ghost" id="btn-full" title="Холст на весь экран" aria-label="Во весь экран"><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6V3h3M13 6V3h-3M3 10v3h3M13 10v3h-3"/></svg></button>
+      <div class="menu-wrap">
+        <button class="ds-btn ds-btn-icon ds-btn-ghost" id="btn-more" title="Ещё" aria-label="Ещё" aria-haspopup="true"><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="3.5" cy="8" r="1" fill="currentColor"/><circle cx="8" cy="8" r="1" fill="currentColor"/><circle cx="12.5" cy="8" r="1" fill="currentColor"/></svg></button>
+        <div class="ds-menu menu" id="menu" hidden>
+          <button id="menu-open">Открыть в новой вкладке</button>
+          <button id="menu-gallery">Все варианты этого задания</button>
+        </div>
+      </div>
+      <span class="sep"></span>
+      <button class="ds-btn ds-btn-primary" id="btn-present" title="Скрыть панели и показать только скетч (Esc — вернуть)">Режим показа</button>
+      <button class="ds-btn ds-btn-icon ds-btn-ghost" id="btn-panel" title="Показать / скрыть панель справа" aria-label="Панель справа" aria-pressed="true"><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="12" height="10" rx="2"/><path d="M10 3v10"/></svg></button>
+    </div>
+  </header>
+
+  <aside class="side" id="side">
+    <div class="search">
+      <input class="ds-input" id="search" type="search" placeholder="Поиск: сетка, шум, текст…" autocomplete="off">
+    </div>
+    <nav id="tree" aria-label="Список скетчей"></nav>
+  </aside>
+
+  <main class="stage" id="stage">
+    <iframe id="frame" title="Скетч" allow="autoplay; fullscreen"></iframe>
+    <div class="notice" id="notice" hidden></div>
+    <section id="gallery" class="gallery" hidden></section>
+    <div class="toast" id="toast" role="alert" hidden></div>
+  </main>
+
+  <aside class="panel" id="panel">
+    <div class="ds-tabs tabs" role="tablist">
+      <button class="ds-tab on" data-tab="params" role="tab">Параметры</button>
+      <button class="ds-tab" data-tab="info" role="tab">Описание</button>
+      <button class="ds-tab" data-tab="code" role="tab">Код</button>
+    </div>
+    <div class="tab-body on" id="tab-params">
+      <div id="params" class="ds-tweakpane"></div>
+      <p class="empty" id="params-empty">У этого скетча нет ползунков. Крути мышью и клавиатурой — подсказка во вкладке «Описание».</p>
+      <div class="row" id="params-actions" hidden>
+        <button class="ds-btn ds-btn-sm" id="btn-reset">Сбросить</button>
+        <button class="ds-btn ds-btn-sm" id="btn-copy-params">Копировать значения</button>
+      </div>
+    </div>
+    <div class="tab-body" id="tab-info"></div>
+    <div class="tab-body" id="tab-code">
+      <div class="row"><button class="ds-btn ds-btn-sm" id="btn-copy-code">Копировать код</button><span class="dim" id="code-file"></span></div>
+      <pre class="ds-code" id="code"></pre>
+    </div>
+  </aside>
+
+</div>
+
+<script type="module" src="studio.js"></script>
+</body>
+</html>

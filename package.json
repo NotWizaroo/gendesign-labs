@@ -1,0 +1,16 @@
+{
+  "name": "generative-design",
+  "version": "1.0.0",
+  "description": "Запуск: `./start.sh` (откроется http://localhost:5500/studio/). Нужен только python3.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@types/p5": "^1.7.7"
+  }
+}
