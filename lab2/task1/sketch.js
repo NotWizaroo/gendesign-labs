@@ -7,6 +7,7 @@ let t = 0;
 
 function setup() {
   createCanvas(640, 480);
+  pixelDensity(1);
   noStroke();
 }
 

@@ -1,83 +1,104 @@
-// Задание 4. Рисунок в духе Джексона Поллока (техника дриппинга),
-// сгенерированный на основе шума Перлина. Алгоритм в точности повторяет
-// блок-схему flowchart.svg — номера блоков указаны в комментариях.
+// Задание 4. Рисунок в духе Джексона Поллока («Серый №14», дриппинг).
+// Каждая «струя краски» — длинная траектория: направление меняется ПЛАВНО
+// (поворот на каждом шаге берётся из шума Перлина), поэтому получаются большие дуги,
+// а не мелкие закорючки. Скорость руки тоже из шума: где рука «медлит», линия толще
+// и иногда остаётся густая лужа. Вдоль линии летят брызги, по холсту — мелкая россыпь.
+// Клавиша R — нарисовать заново, S — сохранить PNG.
 
-const N = 9;                // число "клякс" (потёков краски)
-const K = 260;               // шагов на одну кляксу
-const SPLATTER_PROB = 0.05;  // вероятность p добавить всплеск капель на шаге
-const palette = [
-  [15, 15, 15],       // чёрный
-  [235, 232, 220],    // белый/кремовый
-  [60, 55, 50],        // тёмно-серый
-  [150, 110, 40],       // охра
-];
+const N = 85;                  // число струй краски
+const K = 520;                 // максимум шагов одной струи
+const SPLATTER_PROB = 0.02;    // вероятность брызг на шаге
+const BLOB_PROB = 0.007;       // вероятность густой лужи на шаге
+const BLACK = [15, 15, 15];
+const GRAY = [60, 55, 50];
+const WHITE = [235, 232, 220];
+const OCHRE = [150, 110, 40];
+// повторы задают «вес» цвета: случайный выбор из массива чаще попадает в чёрный
+const palette = [BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, GRAY, GRAY, GRAY, WHITE, WHITE, OCHRE];
 
 function setup() {
-  createCanvas(800, 800);       // блок 2: размер холста
+  createCanvas(900, 650);
   noLoop();
 }
 
 function draw() {
-  background(228, 220, 200);    // фон-холст (небелёный лён)
+  background(228, 220, 200);
+  noiseSeed(floor(random(1e6)));   // у каждой перерисовки свой шум, а значит, свой рисунок
 
-  let i = 1;                    // блок 3: i := 1
-  while (i <= N) {               // блок 4: i <= N ?
-    drawDrip(i);                 // блоки 5-8: одна клякса целиком
-    i = i + 1;                   // блок 9: i := i + 1
+  let i = 1;
+  while (i <= N) {
+    drawDrip(i);
+    i = i + 1;
   }
 
-  drawBackgroundSpeckles();      // блок 10: фоновые точечные брызги
+  drawBackgroundSpeckles();
 }
 
+// Одна струя: идём шагами, поворачивая по шуму, и рисуем отрезки.
 function drawDrip(dripIndex) {
-  // блок 5: случайная точка старта и цвет капли i
-  let x = random(width * 0.15, width * 0.85);
-  let y = random(height * 0.15, height * 0.85);
+  let x = random(width * 0.05, width * 0.95);
+  let y = random(height * 0.05, height * 0.95);
+  let angle = random(TWO_PI);
   const col = random(palette);
   const seed = dripIndex * 1000;
 
-  let step = 1;                  // блок 6: step := 1
-  while (step <= K) {            // блок 7: step <= K ?
-    // блок 8: направление и толщина по шуму Перлина
-    const angle = noise(seed + step * 0.04) * TWO_PI * 2;
-    const speed = map(noise(seed + 500 + step * 0.02), 0, 1, 1.5, 5);
+  let step = 1;
+  while (step <= K) {
+    // поворот = плавный крупный изгиб (медленный шум) + быстрая «дрожь руки» (быстрый шум)
+    angle += (noise(seed + step * 0.012) - 0.5) * 0.24
+           + (noise(seed + 300 + step * 0.06) - 0.5) * 0.16;
+    const speed = map(noise(seed + 500 + step * 0.02), 0, 1, 1.2, 7.5);
     const nx = x + cos(angle) * speed;
     const ny = y + sin(angle) * speed;
 
-    const thickness = map(noise(seed + 1000 + step * 0.05), 0, 1, 0.8, 7);
-    stroke(col[0], col[1], col[2], 230);
+    // медленнее рука — толще линия; отдельный шум добавляет «нажим»
+    const thickness = map(speed, 1.2, 7.5, 8, 0.8) * map(noise(seed + 900 + step * 0.03), 0, 1, 0.6, 1.4);
+    stroke(col[0], col[1], col[2], 235);
     strokeWeight(thickness);
     line(x, y, nx, ny);
 
-    // блок 8: с вероятностью p — всплеск капель
-    if (random(1) < SPLATTER_PROB) {
-      drawSplatter(nx, ny, col);
-    }
+    if (random(1) < SPLATTER_PROB) drawSplatter(nx, ny, col);
+    if (random(1) < BLOB_PROB) drawBlob(nx, ny, col);
 
     x = nx;
     y = ny;
-    step = step + 1;             // step++
+    if (x < -40 || x > width + 40 || y < -40 || y > height + 40) break;  // ушли за холст
+    step = step + 1;
   }
 }
 
+// Россыпь капель вокруг точки.
 function drawSplatter(x, y, col) {
   noStroke();
-  fill(col[0], col[1], col[2], 210);
+  fill(col[0], col[1], col[2], 220);
   const count = floor(random(4, 12));
   for (let k = 0; k < count; k++) {
     const a = random(TWO_PI);
-    const d = random(4, 40);
-    const r = random(1, 4);
-    circle(x + cos(a) * d, y + sin(a) * d, r);
+    const d = random(4, 55);
+    circle(x + cos(a) * d, y + sin(a) * d, random(1, 4.5));
   }
 }
 
+// Густая лужа: несколько перекрывающихся кругов, как упавшая «клякса».
+function drawBlob(x, y, col) {
+  noStroke();
+  fill(col[0], col[1], col[2], 240);
+  const count = floor(random(4, 9));
+  for (let k = 0; k < count; k++) {
+    circle(x + random(-9, 9), y + random(-9, 9), random(6, 20));
+  }
+  // короткий потёк вниз от лужи
+  const len = floor(random(2, 7));
+  for (let k = 1; k <= len; k++) circle(x + random(-2, 2), y + 10 + k * 5, random(2, 5));
+}
+
+// Мелкие брызги по всему холсту.
 function drawBackgroundSpeckles() {
   noStroke();
-  for (let k = 0; k < 500; k++) {
+  for (let k = 0; k < 900; k++) {
     const col = random(palette);
-    fill(col[0], col[1], col[2], random(60, 160));
-    circle(random(width), random(height), random(0.5, 2.2));
+    fill(col[0], col[1], col[2], random(60, 170));
+    circle(random(width), random(height), random(0.5, 2.4));
   }
 }
 
