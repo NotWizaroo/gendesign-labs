@@ -777,12 +777,12 @@
           "title": "Задание 3 · Текстуры",
           "items": [
             {
-              "id": "lab2-t3-marble",
-              "title": "Мрамор",
+              "id": "lab2-t3-wood",
+              "title": "Древесина",
               "kind": "sketch",
-              "src": "lab2/task3-marble/sketch.js",
+              "src": "lab2/task3-wood/sketch.js",
               "original": true,
-              "desc": "Турбулентность (сумма октав шума) внутри sin() даёт извилистые прожилки мрамора.",
+              "desc": "Годовые кольца: расстояние от центра через sin(), искажённое шумом Перлина; вытянутый мелкий шум даёт волокна.",
               "hint": "",
               "tags": [
                 "текстура",
@@ -796,6 +796,32 @@
               "src": "lab2/task3-magma/sketch.js",
               "original": true,
               "desc": "3D-шум (третий аргумент — время) в тёплой шкале «чёрный → красный → оранжевый → жёлтый».",
+              "hint": "",
+              "tags": [
+                "текстура",
+                "шум"
+              ]
+            },
+            {
+              "id": "lab2-t3-clouds",
+              "title": "Облака",
+              "kind": "sketch",
+              "src": "lab2/task3-clouds/sketch.js",
+              "original": true,
+              "desc": "noiseDetail складывает слои шума; значение выше порога — белое облако, ниже — небо. Третий аргумент noise() и сдвиг по X двигают облака.",
+              "hint": "",
+              "tags": [
+                "текстура",
+                "шум"
+              ]
+            },
+            {
+              "id": "lab2-t3-marble",
+              "title": "Мрамор",
+              "kind": "sketch",
+              "src": "lab2/task3-marble/sketch.js",
+              "original": true,
+              "desc": "Турбулентность (сумма октав шума) внутри sin() даёт извилистые прожилки мрамора.",
               "hint": "",
               "tags": [
                 "текстура",
